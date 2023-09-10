@@ -1,21 +1,8 @@
-So far, you have
-learned how to use SQL arithmetic operators to
-perform basic functions. In this video, you'll take one step further
-by learning how to use these arithmetic
-operators in practice when working
-with a database. Let's explore the use
-of arithmetic operators using the example of a corporate
-table of employee data. It's populated with the
-following information about each employee: ID,
-name, and salary. I'm going to demonstrate
-how to use each of the arithmetic
-operators in SQL to perform various functions with this practical data and
-retrieve the desired results. In this first example, let's say that an
-employer wants to give each employee on their
-team a $500 bonus. But first, they'd
-like to see what each employee's salary looks
-like after adding the $500. I can type SELECT salary plus 500 FROM employee to add the $500 bonus to
-each employee's salary. The SELECT command works by retrieving the salary
+So far, you have learned how to use SQL arithmetic operators to perform basic functions. 
+
+In this video, you'll take one step further by learning how to use these arithmetic operators in practice when working with a database. Let's explore the use of arithmetic operators using the example of a corporate table of employee data. It's populated with the following information about each employee: ID, name, and salary. I'm going to demonstrate how to use each of the arithmetic operators in SQL to perform various functions with this practical data and retrieve the desired results. 
+
+In this first example, let's say that an employer wants to give each employee on their team a $500 bonus. But first, they'd like to see what each employee's salary looks like after adding the $500. I can type SELECT salary plus 500 FROM employee to add the $500 bonus to each employee's salary. The SELECT command works by retrieving the salary 
 of each employee from the employee table and then
 adding $500 to each value. Let's execute the query by
 clicking the go button. The result is that
