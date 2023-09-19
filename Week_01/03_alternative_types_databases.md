@@ -4,50 +4,18 @@ You've probably heard of terms like big data and cloud databases, Maybe you've e
 
 Relational databases have limitations when it comes to storing data because they mostly store structured data. Yet databases are now required to store more and more unstructured data. So the trend in recent years has been to rely on NoSQL databases. Instead, NoSQL databases are a type of database that store data in a variety of different formats. Essentially they provide databases with a flexible structure. This makes scaling easy by facilitating a change to the database structure itself without the need for complex data models. NoSQL databases are used by social media platforms, the Internet of Things, artificial intelligence and other applications that generate massive amounts of unstructured data types of NoSQL databases include document databases. 
 
-Key value databases and graph databases. Now that you're familiar with
-different types of databases. Let's take a closer look at Big data and
-cloud databases. Essentially these terms
-are used to describe a recent change in our approach to data and``
-databases. Let's start with a look at big data. Big data is complex data that can
-increase in volume with time. In other words is data that can
-grow exponentially with time. Where does this kind of
-complex data come from? Social media platforms, Online shopping
-sites and other services generate massive amounts of data every second of the day
-as they capture the actions of billions of users around the world and with the
-internet of things or IOT more and more devices are connected to the Internet,
-generating even more and more data. This is how complex data or
-big data is created. All this data is highly unstructured or
-semi structured. Traditional database systems could deal
-with structured data using tables, records and relationships. But big data is a whole new challenge. Big data is a combination of structured,
-semi structured and unstructured data collected
-from many different sources and it adds more power to data because it can
-address complex business problems that traditionally structured
-data can't handle. Finally, big data helps to provide
-unique insights that can help to improve decision making. So it's highly valued
-across many industries. For example, the manufacturing sector
-processes big data to predict equipment failure by evaluating the current state
-of machinery, assess production processes by monitoring the production line, respond
-to customer feedback proactively and anticipate future demands by monitoring
-current sales, retail processes, big data to anticipate customer demand,
-improve customer experience, analyze customer behavior and
-spending patterns and identify pricing
-improvement opportunities. And the telecommunications sector
-utilizes big data analytics and network usage analytics to plan for
-infrastructure investments, design new services that meet customer
-demands, analyze service quality data to predict customer satisfaction and plan for
-customer retention mechanisms now that you're familiar with big data and
-how it helps to power businesses. Let's move on to another trend and
-databases. The use of cloud databases, organizations
-are moving to the cloud to free themselves from the difficulties of
-dealing with the infrastructure of physical servers like maintenance and
-storage costs. Some examples of cloud storage
-services include Dropbox and iCloud. With these cloud storage services,
-it's possible to store documents and other data on the cloud,
-a much more affordable solution. Another trend and
-databases is business intelligence or B. I. Traditionally databases were just a means
-of storing data, but organizations now utilize their data with business
-intelligence related technologies and strategies with these technologies,
-organizations can analyze their data and extract valuable information to help them
-to make informed business decisions. New trends are constantly emerging
-in database technology and they'll keep advancing with time. But for now these were a few of the
-leading trends that you should be aware of
+## Key value databases and graph databases. 
+
+Now that you're familiar with different types of databases. Let's take a closer look at Big data and cloud databases. Essentially these terms are used to describe a recent change in our approach to data and databases. 
+
+Let's start with a look at big data. Big data is complex data that can increase in volume with time. In other words is data that can grow exponentially with time. Where does this kind of complex data come from? Social media platforms, Online shopping sites and other services generate massive amounts of data every second of the day as they capture the actions of billions of users around the world and with the internet of things or IOT more and more devices are connected to the Internet, generating even more and more data. This is how complex data or big data is created. All this data is highly unstructured or semi structured. Traditional database systems could deal with structured data using tables, records and relationships. But big data is a whole new challenge. Big data is a combination of structured, semi structured and unstructured data collected from many different sources and it adds more power to data because it can address complex business problems that traditionally structured data can't handle. Finally, big data helps to provide unique insights that can help to improve decision making. So it's highly valued across many industries. For example:
+
+* the manufacturing sector processes big data to predict equipment failure by evaluating the current state of machinery, assess production processes by monitoring the production line, respond to customer feedback proactively and anticipate future demands by monitoring current sales, 
+
+* retail processes, big data to anticipate customer demand, improve customer experience, analyze customer behavior and spending patterns and identify pricing improvement opportunities. 
+
+* And the telecommunications sector utilizes big data analytics and network usage analytics to plan for infrastructure investments, design new services that meet customer demands, analyze service quality data to predict customer satisfaction and plan for customer retention mechanisms now that you're familiar with big data and how it helps to power businesses. 
+
+Let's move on to another trend and databases. The use of cloud databases, organizations are moving to the cloud to free themselves from the difficulties of dealing with the infrastructure of physical servers like maintenance and storage costs. Some examples of cloud storage services include Dropbox and iCloud. With these cloud storage services, it's possible to store documents and other data on the cloud, a much more affordable solution. 
+
+Another trend and databases is business intelligence or B. I. Traditionally databases were just a means of storing data, but organizations now utilize their data with business intelligence related technologies and strategies with these technologies, organizations can analyze their data and extract valuable information to help them to make informed business decisions. New trends are constantly emerging in database technology and they'll keep advancing with time. But for now these were a few of the leading trends that you should be aware of
