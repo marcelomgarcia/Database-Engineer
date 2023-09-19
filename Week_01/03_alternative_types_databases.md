@@ -1,28 +1,13 @@
-You've probably heard of terms
-like big data and cloud databases, Maybe you've even encountered
-them in this course. But do you know what they mean in this
-video, you'll discover more about these terms and you'll be able to identify
-different types of databases and explain how databases have evolved
-in response to new trends. Like big data databases have
-been around for a long time and have been influenced by
-many different trends. But they've undergone a huge
-change in recent decades. Thanks to the growth of the internet, they now must be able to store ever
-increasing amounts of unstructured data. However, this poses difficulties as
-they mostly store structured data. Let's briefly look at some of
-the different types of databases and how they've been affected by this trend. Relational databases have limitations when
-it comes to storing data because they mostly store structured data. Yet databases are now required to
-store more and more unstructured data. So the trend in recent years has
-been to rely on no sequel databases. Instead, no sequel databases are a type
-of database that store data in a variety of different formats. Essentially they provide databases
-with a flexible structure. This makes scaling easy by facilitating
-a change to the database structure itself without the need for
-complex data models. No sequel databases are used by social
-media platforms, the Internet of Things, artificial intelligence and other
-applications that generate massive amounts of unstructured data types of no sequel
-databases include document databases. Key value databases and graph databases. Now that you're familiar with
+# Alternatives Types of Databases
+
+You've probably heard of terms like big data and cloud databases, Maybe you've even encountered them in this course. But do you know what they mean in this video? You'll discover more about these terms and you'll be able to identify different types of databases and explain how databases have evolved in response to new trends. Like big data databases have been around for a long time and have been influenced by many different trends. But they've undergone a huge change in recent decades. Thanks to the growth of the internet, they now must be able to store ever  increasing amounts of unstructured data. However, this poses difficulties as they mostly store structured data. Let's briefly look at some of the different types of databases and how they've been affected by this trend. 
+
+Relational databases have limitations when it comes to storing data because they mostly store structured data. Yet databases are now required to store more and more unstructured data. So the trend in recent years has been to rely on NoSQL databases. Instead, NoSQL databases are a type of database that store data in a variety of different formats. Essentially they provide databases with a flexible structure. This makes scaling easy by facilitating a change to the database structure itself without the need for complex data models. NoSQL databases are used by social media platforms, the Internet of Things, artificial intelligence and other applications that generate massive amounts of unstructured data types of NoSQL databases include document databases. 
+
+Key value databases and graph databases. Now that you're familiar with
 different types of databases. Let's take a closer look at Big data and
 cloud databases. Essentially these terms
-are used to describe a recent change in our approach to data and
+are used to describe a recent change in our approach to data and``
 databases. Let's start with a look at big data. Big data is complex data that can
 increase in volume with time. In other words is data that can
 grow exponentially with time. Where does this kind of
