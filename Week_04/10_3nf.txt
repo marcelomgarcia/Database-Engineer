@@ -1,0 +1,73 @@
+When working with
+tables in a database, you may often encounter tables that contain repetitive data. Perhaps two columns contain
+values that are very similar. You might split the table in
+two to simplify the data. When building
+relational databases, you can solve similar issues of repetitive data using what's known as third
+normal form, or 3NF. By the end of this video, you'll be able to
+understand how to design a database in third normal form, and explain the concept
+of transitive dependency. Before we begin, make
+sure that you've watched the videos in first and
+second normal form. A database must be in first and second normal form before it can be in
+third normal form. In addition to these rules, databases can contain any instances of
+transitive dependency. In the context of
+third normal form, transitive dependency means that a non-key attribute cannot be functionally dependent on
+another non-key attribute. In other words,
+non-key attributes cannot depend upon one another. A key attribute in a database
+is an attribute that helps to uniquely identify
+a raw of data in a table. To demonstrate this concept, let's take the example
+of a basic table with three columns; A, B, and C. The concept of transitive dependency means that the value of A determines
+the value of B. Likewise, the value of B
+determines the value of C. The relation between
+these table columns is represented by A, B, and C. This means that
+A determines C through B. This is the type
+of relation that database engineers called
+transitive dependency. Let's see how this works
+using a more complex example. I have a table of
+best-selling books within Europe from the database
+of an online bookstore. The table organizes
+the books according to five attributes:
+Book ID and title, author name, author
+language, and country. In this table, ID is the only key or primary key that
+exists in the table. All other attributes
+are non-key attributes. But to determine what these
+non-key attributes are, I most used the ID of
+the top-selling books. This means if I want to find any specific information
+about any attribute, I need to use the
+ID attribute value to find the targeted
+attribute value. For example, if I
+use the ID of 3, then I can locate the
+author, Cormac O'Dwyer, the language,
+Irish, the country, Ireland, and so on. However, it's also possible to determine the country
+based on the language, or to determine the language
+based on the country, and both country and language
+are non-key attributes. For example, in the
+context of Europe, it's always possible to
+determine the country is France, if the language is
+French, and vice versa. This means that I
+have a transitive dependency in this relation. A non-key attribute depends
+on another non-key attribute. This dependency relation
+can be presented as follows : Language determines country, and country determines language. The rest of the attributes
+are fine as they only depend on the
+ID primary key. You can't say, for instance, that author name
+determines book title, or that author name
+determines language. For example, the author, Michel Leiris has
+written two books in two different languages,
+French and Spanish. As I've just pointed out, the
+only transitive dependency that exists in this example is between language and country. How do I solve this
+transitive dependency within my table and remove any
+repetition of data? I can split the table
+into two tables while joining them to conform
+with 3NF rules. I keep the top books table, while splitting off
+the country and language columns into a
+new table called country. But I also leave the
+country column inside the top books table as a foreign key that
+connects the two tables. The country table now holds just four records with
+no repetition of data. There's no need for
+language column within the top books table. Stating the country is enough
+to determine the language. Most importantly, all
+non-key attributes are determined only by the
+primary key in each table. This means that my
+table then meets the requirements of 3NF. You should now
+know how to design a database in third normal form. You should also be able
+to explain the concept of transitive dependency.
+Well done.

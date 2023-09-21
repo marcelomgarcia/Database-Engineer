@@ -1,0 +1,75 @@
+As a database engineer, you'll very often come across
+columns in a table that are filled with duplicates of
+data and multiple values. This can make it quite
+challenging to view, search and sort your data. But with the correct
+implementation of normalization, this challenge can
+be dealt with. By the end of this video, you'll be able to
+demonstrate how to design a database in
+first normal form. Identify the atomicity rule
+and how to enforce it, and analyze effective
+ways to eliminate the repeating group of
+data problems in datasets. As you might already know from previous videos in this lesson, the normalization process
+makes it easier and more efficient for engineers to
+perform basic database tasks. It's an especially
+useful process for helping to fix the
+well-known insert, delete, and update anomalies. However, in order to achieve
+database normalization, you first need to perform the three fundamental
+normalization forms. The database normalization forms include first
+normal form or 1NF, second normal form or 2NF and
+third normal form or 3NF. This video focuses on
+designing a database to meet the first normal
+form or 1NF rules. These rules enforce data
+atomicity and eliminate unnecessary repeating groups
+of data in database tables. Data atomicity means
+that there must only be one single instance value of the column attribute in
+any field of the table. In other words, your tables should only have one
+value per field. By eliminating repeating
+groups of data, you can avoid repeating data unnecessarily in the database. Instances of repeated data can cause data redundancy
+and inconsistency. To understand this better,
+let's explore an example, to demonstrate data atomicity. I've built an
+unnormalized table called Course Table within
+a college database. It includes information about the colleges computing courses, along with the names and contact details of the course tutors. The course ID column serves
+as the table's primary key. However, there are
+multiple values in each row of the
+contact number column. Each row contains two contact
+details for each tutor, a cell phone number,
+and a landline number. This table isn't in 1NF. It violates the
+atomicity rule by including multiple values
+in a single field. I can try and fix this by creating a new row
+for each number. This solves my data
+atomicity problem. The table now has just
+one value in each field. But this solution has also
+created another problem. The primary key is
+no longer unique because multiple rows now
+has the same course ID. Another way that I
+could solve the problem of atomicity while retaining the primary key is by creating two columns
+for contact numbers. One column for cell phones and second column for
+landline numbers. But I still have the issue of unnecessary repeated
+groups of data. Mary Evans is the assigned
+tutor for two of the courses. Her name appears twice in the table as do her
+contact details. These instances of
+data will continue to reappear if she's assigned
+more courses to teach. It's likely that our
+details will appear in other tables within
+a database system. This means I could have even more groups of repeated data. This creates another problem. If this user changes
+any of their details, then I'll have to
+update their details in this table and all others
+in which it appears. If I miss any of these tables, then I'll have inconsistency and invalid data within
+my database system. To solve this issue,
+I can redesign my table to adhere to 1NF
+or first normal form. First, I identify the
+repeating groups of data. In this case is the tutor's
+name and contact numbers. Next, I identify the
+entities I'm dealing with, which are course and tutor. Then I split the
+course table so that I now have one table
+for each entity. A course table that contains information about the courses. I choose a table that maintains the name and contact
+numbers of each tutor. Now I need to assign a primary
+key to the tutor table. I select that tutor ID column. I've solved the problem
+of data atomicity, but I also need to provide a
+link between the two tables. I can connect the two tables
+by using a foreign key. I just add the tutor ID
+column to the course table. Now both tables are linked. I've now achieved
+data atomicity and eliminated unnecessary
+repeating groups of data. You should now be familiar
+with 1NF and the rules that you should apply to
+avoid it. Good work.
