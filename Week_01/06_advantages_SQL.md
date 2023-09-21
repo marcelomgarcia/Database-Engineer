@@ -1,3 +1,5 @@
+# Advantages of SQL
+
 By now you're most likely
 familiar with the basics of databases and you
 might even have come across some
