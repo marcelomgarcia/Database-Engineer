@@ -8,6 +8,49 @@ Starting the containers:
 PS C:\Users\mgarcia\Work\Database-Engineer> docker compose up -d
 ```
 
+Accessing the MySQL container
+
+```
+PS C:\Users\mg> docker exec -it database-engineer-db-1 /bin/bash
+bash-4.4# mysql -u root -p
+```
+
+## Join
+
+Doing a _left inner_ on the _little lemon_ database
+
+```sql
+mysql> SELECT cc.FullName AS "Full Name", cc.PhoneNumber AS "Phone Number", bb.BookingDate as "Booking Date", bb.NumberOfGuests as "Number Guests" FROM Customers as cc INNER JOIN Bookings AS bb ON cc.CustomerID = bb.CustomerID;
+```
+The result should be like 
+
+```
++------------------+--------------+--------------+---------------+
+| Full Name        | Phone Number | Booking Date | Number Guests |
++------------------+--------------+--------------+---------------+
+| Vanessa McCarthy |    757536378 | 2021-11-11   |             5 |
+| Marcos Romero    |    757536379 | 2021-11-10   |             2 |
+| Anna Iversen     |    757536375 | 2021-11-10   |             2 |
++------------------+--------------+--------------+---------------+
+3 rows in set (0.00 sec)
+```
+
+And a _left join_
+
+```
+mysql> SELECT cc.CustomerID, bb.BookingID FROM Customers as cc LEFT JOIN Bookings as bb ON cc.CustomerID = bb.CustomerID;
++------------+-----------+
+| CustomerID | BookingID |
++------------+-----------+
+|          5 |      NULL |
+|          4 |        12 |
+|          3 |      NULL |
+|          1 |        10 |
+|          2 |        11 |
++------------+-----------+
+5 rows in set (0.00 sec)
+```
+
 ## Additional Resources 
 
 ### SQL Schema
