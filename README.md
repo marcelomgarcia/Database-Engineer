@@ -15,6 +15,17 @@ PS C:\Users\mg> docker exec -it database-engineer-db-1 /bin/bash
 bash-4.4# mysql -u root -p
 ```
 
+or connecting to MySQL directly from the `docker` command
+
+```
+PS C:\Users\garcm0b\Work\Database-Engineer> docker exec -it database-engineer-db-1 mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.1.0 MySQL Community Server - GPL
+(...)
+```
+
 ## Join
 
 Doing a _left inner_ on the _little lemon_ database
