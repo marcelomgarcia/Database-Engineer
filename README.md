@@ -62,6 +62,39 @@ mysql> SELECT cc.CustomerID, bb.BookingID FROM Customers as cc LEFT JOIN Booking
 5 rows in set (0.00 sec)
 ```
 
+## Subquery
+
+Using subqueries 
+
+Create a `SELECT` statement to retrieve all bookings after Vanessa's booking:
+
+```
+mysql> SELECT * FROM Bookings;
++-----------+---------+----------------+---------------+-------------+------------+
+| BookingID | TableNo | GuestFirstName | GuestLastName | BookingSlot | EmployeeID |
++-----------+---------+----------------+---------------+-------------+------------+
+|         1 |      12 | Anna           | Iversen       | 19:00:00    |          1 |
+|         2 |      12 | Joakim         | Iversen       | 19:00:00    |          1 |
+|         3 |      19 | Vanessa        | McCarthy      | 15:00:00    |          3 |
+|         4 |      15 | Marcos         | Romero        | 17:30:00    |          4 |
+|         5 |       5 | Hiroki         | Yamane        | 18:30:00    |          2 |
+|         6 |       8 | Diana          | Pinto         | 20:00:00    |          5 |
++-----------+---------+----------------+---------------+-------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Bookings WHERE TIME(BookingSlot) > (SELECT BookingSlot FROM Bookings WHERE GuestFirstName = "Vanessa");
++-----------+---------+----------------+---------------+-------------+------------+
+| BookingID | TableNo | GuestFirstName | GuestLastName | BookingSlot | EmployeeID |
++-----------+---------+----------------+---------------+-------------+------------+
+|         1 |      12 | Anna           | Iversen       | 19:00:00    |          1 |
+|         2 |      12 | Joakim         | Iversen       | 19:00:00    |          1 |
+|         4 |      15 | Marcos         | Romero        | 17:30:00    |          4 |
+|         5 |       5 | Hiroki         | Yamane        | 18:30:00    |          2 |
+|         6 |       8 | Diana          | Pinto         | 20:00:00    |          5 |
++-----------+---------+----------------+---------------+-------------+------------+
+5 rows in set (0.00 sec)
+```
+
 ## Additional Resources 
 
 ### SQL Schema
