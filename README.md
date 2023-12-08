@@ -95,6 +95,25 @@ mysql> SELECT * FROM Bookings WHERE TIME(BookingSlot) > (SELECT BookingSlot FROM
 5 rows in set (0.00 sec)
 ```
 
+## Triggers
+
+Execute a trigger after inserting value in a table. 
+
+First copy the scrpit to the container:
+
+```
+PS C:\Users\mgarcia\Work\Database-Engineer> docker cp mysql_trigger_lab.sql  130034af683b:/tmp
+Successfully copied 2.05kB to 130034af683b:/tmp
+PS C:\Users\mgarcia\Work\Database-Engineer>
+```
+
+Then execute the script in MySQL
+
+```
+mysql> SOURCE /tmp/mysql_trigger_lab.sql
+Query OK, 0 rows affected (0.03 sec)
+```
+
 ## Additional Resources 
 
 ### SQL Schema
