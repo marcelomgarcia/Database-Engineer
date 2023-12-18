@@ -114,6 +114,109 @@ mysql> SOURCE /tmp/mysql_trigger_lab.sql
 Query OK, 0 rows affected (0.03 sec)
 ```
 
+## Optimization
+
+Use a list of columns that are needed instead of all ('*'):
+
+```
+mysql> select OrderID, ProductID, Quantity, Date from Orders;
++---------+-----------+----------+------------+
+| OrderID | ProductID | Quantity | Date       |
++---------+-----------+----------+------------+                                                                                                            
+|       1 | P1        |       10 | 2020-09-01 |
+|       2 | P2        |        5 | 2020-09-05 |
+(...)
+```
+
+Create an index to improve performance of the queries. Before creating the index
+
+```
+mysql> explain select * from Orders where ClientID = 'Cl1';
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table  | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | Orders | NULL       | ALL  | NULL          | NULL | NULL    | NULL |   29 |    10.00 | Using where |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.00 sec)
+```
+
+Create the index:
+
+```
+mysql> create index IdxClientID on Orders (ClientID);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+```
+
+Check the plan again, and note the field `key`:
+
+```
+mysql>
+mysql> explain select * from Orders where ClientID = 'Cl1';
++----+-------------+--------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+| id | select_type | table  | partitions | type | possible_keys | key         | key_len | ref   | rows | filtered | Extra |
++----+-------------+--------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | Orders | NULL       | ref  | IdxClientID   | IdxClientID | 43      | const |    8 |   100.00 | NULL  |
++----+-------------+--------+------------+------+---------------+-------------+---------+-------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+```
+
+Avoid using leading wildcard, like this
+
+```sql
+mysql> SELECT * FROM Employees WHERE FullName LIKE '%Tolo';
+```
+
+Instead create a new column, `ReverseFullName` and create an index on tha column
+
+First testing the `ReverseFullName`:
+
+```sql
+mysql> select concat(trim(substring(FullName, locate(' ', FullName))), ' ', substring_index(FullName, ' ', 1)) as ReverseFullName from Employees;
+```
+
+Now we can create the new column and populate it
+
+```sql
+mysql> alter table Employees add column ReverseFullName varchar(100);
+mysql> update Employees set ReverseFullName = concat(trim(substring(FullName, locate(' ', FullName))), ' ', substring_index(FullName, ' ', 1));
+mysql> select FullName, ReverseFullName from Employees;
++------------------+------------------+
+| FullName         | ReverseFullName  |
++------------------+------------------+
+| Seamus Hogan     | Hogan Seamus     |
+(...)
+```
+
+Comparing the two approaches to check the use of index. Here with the leading wildcard, the index is not used:
+
+```
+mysql> create index IdxFullName on Employees (FullName);
+mysql> explain SELECT * FROM Employees WHERE FullName LIKE '%Tolo';
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table     | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | Employees | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    8 |    12.50 | Using where |
++----+-------------+-----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql>
+```
+
+On the other hand, with a trailing wildcard, then the index is used:
+
+```
+mysql> explain SELECT * FROM Employees WHERE ReverseFullName LIKE 'Tolo%';
++----+-------------+-----------+------------+-------+--------------------+--------------------+---------+------+------+----------+-----------------------+
+| id | select_type | table     | partitions | type  | possible_keys      | key                | key_len | ref  | rows | filtered | Extra                 |
++----+-------------+-----------+------------+-------+--------------------+--------------------+---------+------+------+----------+-----------------------+
+|  1 | SIMPLE      | Employees | NULL       | range | IdxReverseFullName | IdxReverseFullName | 403     | NULL |    1 |   100.00 | Using index condition |
++----+-------------+-----------+------------+-------+--------------------+--------------------+---------+------+------+----------+-----------------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql>
+```
+
 ## Additional Resources 
 
 ### SQL Schema
