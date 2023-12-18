@@ -116,6 +116,17 @@ Query OK, 0 rows affected (0.03 sec)
 
 ## Optimization
 
+> Removed the previous DB, and create a new one from `luckyshrub_db_4.sql`
+> ```
+> a-garcm0b@library-docker-test:~/Work/Database-Engineer$ docker ps
+> (...)
+> 1917dad7b127   mysql        "docker-entrypoint.s…"
+> a-garcm0b@library-docker-test:~/Work/Database-Engineer$ docker cp luckyshrub_db_4.sql 1917dad7b127:/tmp
+> Successfully copied 5.12kB to 1917dad7b127:/tmp
+> (...)
+> mysql> drop database Lucky_Shrub;
+> mysql> source /tmp/luckyshrub_db_4.sql
+> ```
 Use a list of columns that are needed instead of all ('*'):
 
 ```
