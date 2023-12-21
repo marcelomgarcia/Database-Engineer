@@ -267,6 +267,61 @@ mysql> with
 
 mysql>
 ```
+### Prepared Statements
+
+[Prepared statements](https://www.mysqltutorial.org/mysql-prepared-statement.aspx) are pre-compiled statements that can be used several times. First standard query
+
+```
+mysql> select OrderID, Quantity, Cost, Date from Orders where ClientID = 'Cl1' and year(Date) = 2020;
++---------+----------+---------+------------+
+| OrderID | Quantity | Cost    | Date       |
++---------+----------+---------+------------+
+|       1 |       10 |  500.00 | 2020-09-01 |
+|       7 |       22 | 1200.00 | 2020-09-10 |
+|       9 |       10 |  500.00 | 2020-09-12 |
++---------+----------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
+
+A prepared statement is very similar, but it starts with the `PREPARE` statement and have the place holders for the variables `?`:
+
+```
+mysql> prepare GetOrderDetail from "select OrderID, Quantity, Cost, Date from Orders where ClientID = ? and year(Date) = ?";
+Query OK, 0 rows affected (0.00 sec)
+Statement prepared
+
+mysql>
+```
+
+Next we define the variables
+
+```
+mysql> set @ID='Cl1';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @Year = 2020;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+```
+
+Finally we execute the prepared statement
+
+```
+mysql> execute GetOrderDetail using @ID, @Year;
++---------+----------+---------+------------+
+| OrderID | Quantity | Cost    | Date       |
++---------+----------+---------+------------+
+|       1 |       10 |  500.00 | 2020-09-01 |
+|       7 |       22 | 1200.00 | 2020-09-10 |
+|       9 |       10 |  500.00 | 2020-09-12 |
++---------+----------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
 
 ## Additional Resources 
 
