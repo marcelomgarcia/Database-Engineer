@@ -1,11 +1,19 @@
+-- Create DB
 CREATE DATABASE  Lucky_Shrub; 
 
+-- Use DB
 USE Lucky_Shrub;
 
+-- Create Orders
 CREATE TABLE IF NOT EXISTS Orders (OrderID INT NOT NULL PRIMARY KEY, ClientID VARCHAR(10), ProductID VARCHAR(10), Quantity INT, Cost DECIMAL(6,2), Date DATE);
+
+-- Create Products
 CREATE TABLE IF NOT EXISTS Products (ProductID VARCHAR(10), ProductName VARCHAR(100), BuyPrice DECIMAL(6,2), SellPrice DECIMAL(6,2), NumberOfItems INT);
+
+-- Create Activity
 CREATE TABLE IF NOT EXISTS Activity (ActivityID INT PRIMARY KEY, Properties JSON );
 
+-- Insert into Orders
 INSERT INTO Orders (OrderID, ClientID, ProductID , Quantity, Cost, Date) VALUES 
 (1, "Cl1", "P1", 10, 500, "2020-09-01" ), 
 (2, "Cl2", "P2", 5, 100, "2020-09-05"), 
@@ -38,6 +46,7 @@ INSERT INTO Orders (OrderID, ClientID, ProductID , Quantity, Cost, Date) VALUES
 (29, "Cl3", "P3", 20, 800, "2021-09-03"), 
 (30, "Cl1", "P1", 10, 500, "2022-09-01"); 
 
+-- Insert into Products
 INSERT INTO Products (ProductID, ProductName, BuyPrice, SellPrice, NumberOfItems) VALUES 
 ("P1", "Artificial grass bags ", 40, 50, 100), 
 ("P2", "Wood panels", 15, 20, 250), 
@@ -46,6 +55,7 @@ INSERT INTO Products (ProductID, ProductName, BuyPrice, SellPrice, NumberOfItems
 ("P5", "Trees and Shrubs", 35, 50, 75), 
 ("P6", "Water fountain", 65, 80, 15);
 
+-- Insert into Activity
 INSERT INTO Activity(ActivityID, Properties) VALUES  
 (1, '{ "ClientID": "Cl1", "ProductID": "P1", "Order": "True" }' ),  
 (2, '{ "ClientID": "Cl2", "ProductID": "P4", "Order": "False" }' ),  
