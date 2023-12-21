@@ -228,6 +228,46 @@ mysql> explain SELECT * FROM Employees WHERE ReverseFullName LIKE 'Tolo%';
 mysql>
 ```
 
+### Common Table Expression (CTE)
+
+The idea is to transform a complex query into manageble building blocks. First a traditional `SELECT` statement:
+
+```
+mysql> SELECT CONCAT("Cl1: ", COUNT(OrderID), "orders") AS "Total number of orders" FROM Orders WHERE YEAR(Date) = 2022 AND ClientID = "Cl1" UNION SELECT CONCAT("Cl2: ", COUNT(OrderID), "orders") FROM Orders WHERE YEAR(Date) = 2022 AND ClientID = "Cl2" UNION SELECT CONCAT("Cl3: ", COUNT(OrderID), "orders") FROM Orders WHERE YEAR(Date) = 2022 AND ClientID = "Cl3";
++------------------------+
+| Total number of orders |
++------------------------+
+| Cl1: 4orders           |
+| Cl2: 5orders           |
+| Cl3: 3orders           |
++------------------------+
+3 rows in set (0.00 sec)
+```
+
+The same query as a [CTE](https://dev.mysql.com/doc/refman/8.0/en/with.html):
+
+```
+mysql> with
+    -> OrdersByCl1 as (select concat("CL1: ", count(OrderID), " orders") as "Total number of orders" from Orders where year(Date) = 2022 and ClientID = "CL1"),
+    -> OrdersByCl2 as (select concat("CL2: ", count(OrderID), " orders") from Orders where year(Date) = 2022 and ClientID = "CL2"),
+    -> OrdersByCl3 as (select concat("CL3: ", count(OrderID), " orders") from Orders where year(Date) = 2022 and ClientID = "CL3")
+    -> select * from OrdersByCl1
+    -> union
+    -> select * from OrdersByCl2
+    -> union
+    -> select * from OrdersByCl3;
++------------------------+
+| Total number of orders |
++------------------------+
+| CL1: 4 orders          |
+| CL2: 5 orders          |
+| CL3: 3 orders          |
++------------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
+
 ## Additional Resources 
 
 ### SQL Schema
