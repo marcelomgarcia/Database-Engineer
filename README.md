@@ -323,6 +323,58 @@ mysql> execute GetOrderDetail using @ID, @Year;
 mysql>
 ```
 
+### JSON
+
+Reading JSON field from MySQL. 
+
+Important:
+
+* Use `->$.PropertyName` to keep the double quotes from the property,
+* use `->>$.PropertyName` to remove the quotes.
+
+Example
+
+```
+mysql> select * from Products;
++-----------+------------------------+----------+-----------+---------------+
+| ProductID | ProductName            | BuyPrice | SellPrice | NumberOfItems |
++-----------+------------------------+----------+-----------+---------------+
+| P1        | Artificial grass bags  |    40.00 |     50.00 |           100 |
+| P2        | Wood panels            |    15.00 |     20.00 |           250 |
+(...)
+
+mysql> select * from Activity;                                                                                                                             +------------+----------------------------------------------------------+
+| ActivityID | Properties                                               |
++------------+----------------------------------------------------------+
+|          1 | {"Order": "True", "ClientID": "Cl1", "ProductID": "P1"}  |
+|          2 | {"Order": "False", "ClientID": "Cl2", "ProductID": "P4"} |
+|          3 | {"Order": "True", "ClientID": "Cl5", "ProductID": "P5"}  |
++------------+----------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
+
+Reading the products with `Order` with `True`
+
+```
+mysql> select ProductID,ProductName,BuyPrice,SellPrice from Products
+    -> inner join Activity on
+    -> Products.ProductID = Activity.Properties->>'$.ProductID' and
+    -> Activity.Properties->'$.Order' = "True";
++-----------+------------------------+----------+-----------+
+| ProductID | ProductName            | BuyPrice | SellPrice |
++-----------+------------------------+----------+-----------+
+| P1        | Artificial grass bags  |    40.00 |     50.00 |
+| P5        | Trees and Shrubs       |    35.00 |     50.00 |
++-----------+------------------------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql>
+```
+
+Note that we removed the double quotes from `ProductID` but we kept for the `"True"`.
+
 ## Additional Resources 
 
 ### SQL Schema
