@@ -460,7 +460,7 @@ mysql> source /tmp/several_inner_join.sql
 (...)
 ```
 
-Finally for "task 3" we will create a function
+Finally for "task 3" that will return the total quantity of a product sold in the year, we will create a function
 
 ```sql
 delimiter $$
