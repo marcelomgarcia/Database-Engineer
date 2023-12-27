@@ -399,6 +399,35 @@ Database changed
 (...)
 ```
 
+The task1 is to find out how many of product P4 was sold in the last years. We use a `CTE` to consolidate the sales:
+
+```sql
+with
+SalesP4in2020 as (select concat(sum(Quantity), " (2020)") as "P4 product: Quantity sold" from Orders where year(Date) = 2020 and ProductID = "P4"),
+SalesP4in2021 as (select concat(sum(Quantity), " (2021)" )from Orders where year(Date) = 2021 and ProductID = "P4"),
+SalesP4in2022 as (select concat(sum(Quantity), " (2022)") from Orders where year(Date) = 2022 and ProductID = "P4")
+select * from SalesP4in2020
+union
+select * from SalesP4in2021
+union
+select * from SalesP4in2022;
+```
+
+So when execute the SQL script `data_analysis_cte.sql` we get the table:
+
+```
+mysql> source /tmp/data_analysis_cte.sql
++---------------------------+
+| P4 product: Quantity sold |
++---------------------------+
+| 37 (2020)                 |
+| 15 (2021)                 |
+| 37 (2022)                 |
++---------------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
 
 ## Additional Resources 
 
