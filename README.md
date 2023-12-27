@@ -429,7 +429,7 @@ mysql> source /tmp/data_analysis_cte.sql
 mysql>
 ```
 
-Next joining several tables to list all clients and orders between 2021 and 2022. We joined 4 tables
+Next on task 2, we join several tables to list all clients and orders between 2021 and 2022. We joined 4 tables
 
 ```sql
 select
