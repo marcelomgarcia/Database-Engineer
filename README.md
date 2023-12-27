@@ -428,3 +428,34 @@ mysql> source /tmp/data_analysis_cte.sql
 
 mysql>
 ```
+
+Next joining several tables to list all clients and orders between 2021 and 2022. We joined 4 tables
+
+```sql
+select
+  Clients.ClientID, Clients.ContactNumber, Addresses.Street, Addresses.County,
+  Orders.OrderID, Products.ProductID, Products.ProductName, Orders.Cost, Orders.Date
+from
+  Clients inner join Addresses inner join Orders inner join Products
+on (
+  Clients.AddressID = Addresses.AddressID 
+  and Clients.ClientID = Orders.ClientID 
+  and Orders.ProductID = Products.ProductID
+)
+where 
+  year(Orders.Date) between 2021 and 2022
+order by 
+  Orders.Date
+```
+
+The output is below:
+
+```
+mysql> source /tmp/several_inner_join.sql
++----------+---------------+----------------------+-------------------+---------+-----------+------------------------+---------+------------+
+| ClientID | ContactNumber | Street               | County            | OrderID | ProductID | ProductName            | Cost    | Date       |
++----------+---------------+----------------------+-------------------+---------+-----------+------------------------+---------+------------+
+| Cl2      |     351567243 | 724 Greenway Drive   | Pinal County      |      22 | P1        | Artificial grass bags  |  500.00 | 2021-09-01 |
+| Cl3      |     351342597 | 102 Sycamore Lane    | Santa Cruz County |      24 | P3        | Patio slates           |  800.00 | 2021-09-03 |
+(...)
+```
