@@ -343,7 +343,8 @@ mysql> select * from Products;
 | P2        | Wood panels            |    15.00 |     20.00 |           250 |
 (...)
 
-mysql> select * from Activity;                                                                                                                             +------------+----------------------------------------------------------+
+mysql> select * from Activity;
++------------+----------------------------------------------------------+
 | ActivityID | Properties                                               |
 +------------+----------------------------------------------------------+
 |          1 | {"Order": "True", "ClientID": "Cl1", "ProductID": "P1"}  |
@@ -374,6 +375,30 @@ mysql>
 ```
 
 Note that we removed the double quotes from `ProductID` but we kept for the `"True"`.
+
+## Data Analysis in MySQL
+
+Uploading a new database
+
+```
+a-garcm0b@library-docker-test:~/Work/Database-Engineer$ docker cp luckyshrub_db_6.sql database-engineer-db-1:/tmp
+Successfully copied 6.14kB to database-engineer-db-1:/tmp
+a-garcm0b@library-docker-test:~/Work/Database-Engineer$
+```
+
+Removing old database, and creating the new one
+
+```
+mysql> drop database Lucky_Shrub;
+Query OK, 3 rows affected (0.03 sec)
+
+mysql> source /tmp/luckyshrub_db_6.sql
+Query OK, 1 row affected (0.01 sec)
+
+Database changed
+(...)
+```
+
 
 ## Additional Resources 
 
