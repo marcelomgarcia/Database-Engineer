@@ -459,3 +459,36 @@ mysql> source /tmp/several_inner_join.sql
 | Cl3      |     351342597 | 102 Sycamore Lane    | Santa Cruz County |      24 | P3        | Patio slates           |  800.00 | 2021-09-03 |
 (...)
 ```
+
+Finally for "task 3" we will create a function
+
+```sql
+delimiter $$
+
+create function FindSoldQuantity(ii varchar(10), yy int)
+returns int
+deterministic
+
+begin
+  declare qtd int;
+  set qtd = 0;
+  select sum(Quantity) into qtd from Orders where ProductID=ii and year(Date) = yy;
+  return qtd;
+end$$
+
+delimiter ;
+```
+
+And calling the function
+
+```
+mysql> select FindSoldQuantity("P3", 2021);
++------------------------------+
+| FindSoldQuantity("P3", 2021) |
++------------------------------+
+|                           50 |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+```
