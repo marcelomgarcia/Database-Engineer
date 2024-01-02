@@ -1,5 +1,5 @@
 # Database Engineer
- 
+
 ## Docker Container
 
 Starting the containers:
@@ -33,7 +33,8 @@ Doing a _left inner_ on the _little lemon_ database
 ```sql
 mysql> SELECT cc.FullName AS "Full Name", cc.PhoneNumber AS "Phone Number", bb.BookingDate as "Booking Date", bb.NumberOfGuests as "Number Guests" FROM Customers as cc INNER JOIN Bookings AS bb ON cc.CustomerID = bb.CustomerID;
 ```
-The result should be like 
+
+The result should be like
 
 ```
 +------------------+--------------+--------------+---------------+
@@ -64,7 +65,7 @@ mysql> SELECT cc.CustomerID, bb.BookingID FROM Customers as cc LEFT JOIN Booking
 
 ## Subquery
 
-Using subqueries 
+Using subqueries
 
 Create a `SELECT` statement to retrieve all bookings after Vanessa's booking:
 
@@ -97,7 +98,7 @@ mysql> SELECT * FROM Bookings WHERE TIME(BookingSlot) > (SELECT BookingSlot FROM
 
 ## Triggers
 
-Execute a trigger after inserting value in a table. 
+Execute a trigger after inserting value in a table.
 
 First copy the scrpit to the container:
 
@@ -117,6 +118,7 @@ Query OK, 0 rows affected (0.03 sec)
 ## Optimization
 
 > Removed the previous DB, and create a new one from `luckyshrub_db_4.sql`
+>
 > ```
 > a-garcm0b@library-docker-test:~/Work/Database-Engineer$ docker ps
 > (...)
@@ -127,13 +129,14 @@ Query OK, 0 rows affected (0.03 sec)
 > mysql> drop database Lucky_Shrub;
 > mysql> source /tmp/luckyshrub_db_4.sql
 > ```
-Use a list of columns that are needed instead of all ('*'):
+>
+> Use a list of columns that are needed instead of all ('\*'):
 
 ```
 mysql> select OrderID, ProductID, Quantity, Date from Orders;
 +---------+-----------+----------+------------+
 | OrderID | ProductID | Quantity | Date       |
-+---------+-----------+----------+------------+                                                                                                            
++---------+-----------+----------+------------+
 |       1 | P1        |       10 | 2020-09-01 |
 |       2 | P2        |        5 | 2020-09-05 |
 (...)
@@ -267,6 +270,7 @@ mysql> with
 
 mysql>
 ```
+
 ### Prepared Statements
 
 [Prepared statements](https://www.mysqltutorial.org/mysql-prepared-statement.aspx) are pre-compiled statements that can be used several times. First standard query
@@ -325,12 +329,12 @@ mysql>
 
 ### JSON
 
-Reading JSON field from MySQL. 
+Reading JSON field from MySQL.
 
 Important:
 
-* Use `->$.PropertyName` to keep the double quotes from the property,
-* use `->>$.PropertyName` to remove the quotes.
+- Use `->$.PropertyName` to keep the double quotes from the property,
+- use `->>$.PropertyName` to remove the quotes.
 
 Example
 
@@ -438,13 +442,13 @@ select
 from
   Clients inner join Addresses inner join Orders inner join Products
 on (
-  Clients.AddressID = Addresses.AddressID 
-  and Clients.ClientID = Orders.ClientID 
+  Clients.AddressID = Addresses.AddressID
+  and Clients.ClientID = Orders.ClientID
   and Orders.ProductID = Products.ProductID
 )
-where 
+where
   year(Orders.Date) between 2021 and 2022
-order by 
+order by
   Orders.Date
 ```
 
@@ -488,6 +492,62 @@ mysql> select FindSoldQuantity("P3", 2021);
 +------------------------------+
 |                           50 |
 +------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+```
+
+## Module Assessment
+
+### Task 1: Function
+
+Create a function to return the average sales price of all products in a given year. The year is the input parameter.
+
+Using a new database: `/tmp/luckyshrub_db_7.sql`
+
+```
+mysql> drop Lucky_Shrub;
+
+mysql> source /tmp/luckyshrub_db_7.sql
+Query OK, 1 row affected (0.01 sec)
+
+Database changed
+Query OK, 0 rows affected (0.02 sec)mysql> source /tmp/luckyshrub_db_7.sql
+Query OK, 1 row affected (0.01 sec)
+
+Database changed
+Query OK, 0 rows affected (0.02 sec)
+(...)
+```
+
+Declaring the function
+
+```sql
+delimiter $$
+
+create function FindAverageCost(yy int)
+returns decimal(10, 2)
+deterministic
+
+begin
+  declare avg_sales decimal(10,2);
+  set avg_sales = 0.0;
+  select avg(Cost) into avg_sales from Orders where year(Date) = yy;
+  return avg_sales;
+end$$
+
+delimiter ;
+```
+
+Invoking the function
+
+```
+mysql> select FindAverageCost(2022);
++-----------------------+
+| FindAverageCost(2022) |
++-----------------------+
+|                496.15 |
++-----------------------+
 1 row in set (0.00 sec)
 
 mysql>
