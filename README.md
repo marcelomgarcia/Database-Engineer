@@ -552,3 +552,34 @@ mysql> select FindAverageCost(2022);
 
 mysql>
 ```
+
+### Task 2: Stored Procedure
+
+Creating a stored procedure
+
+```sql
+create procedure EvaluateProductYears (in prod_id varchar(10), out sold_2020 int, out sold_2021 int, out sold_2022 int)
+begin
+    select sum(Quantity) into sold_2020 from Orders where ProductID = prod_id and year(Date) = 2020;
+    select sum(Quantity) into sold_2021 from Orders where ProductID = prod_id and year(Date) = 2021;
+    select sum(Quantity) into sold_2022 from Orders where ProductID = prod_id and year(Date) = 2022;
+end //
+
+delimiter ;
+```
+
+```
+mysql> call EvaluateProductYears("P1", @sold_items_2020, @sold_items_2021, @sold_items_2022);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> select @sold_items_2020, @sold_items_2021, @sold_items_2022;
++------------------+------------------+------------------+
+| @sold_items_2020 | @sold_items_2021 | @sold_items_2022 |
++------------------+------------------+------------------+
+|               35 |               10 |               65 |
++------------------+------------------+------------------+
+1 row in set (0.00 sec)
+
+mysql>
+```
