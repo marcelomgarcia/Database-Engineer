@@ -583,3 +583,62 @@ mysql> select @sold_items_2020, @sold_items_2021, @sold_items_2022;
 
 mysql>
 ```
+
+### Task 3: Triggers
+
+Create a trigger, and import, that add date and time to `Audit` database when when data is added to `Orders` table.
+
+The trigger
+
+```sql
+DELIMITER $$
+
+-- Insert ---
+
+CREATE TRIGGER UpdateAudit AFTER INSERT ON Orders FOR EACH ROW
+BEGIN
+  INSERT INTO Audit VALUES (NULL, NOW());
+END$$
+
+-- End of triggers.
+
+DELIMITER ;
+```
+
+Importing the trigger
+
+```
+mysql> source /tmp/trigger_orders_add.sql
+```
+
+Before creating the trigger, the `Audit` table is empty
+
+```
+mysql> select * from Audit;
+Empty set (0.00 sec)
+
+mysql>
+```
+
+Adding new orders, and checking the `Audit` table again
+
+```
+mysql> INSERT INTO Orders (OrderID, ClientID, ProductID , Quantity, Cost, Date) VALUES
+    -> (31, "Cl2", "P3", 11, 543, "2022-09-11"),
+    -> (32, "Cl4", "P2", 21, 234, "2022-09-21"),
+    -> (33, "Cl3", "P4", 31, 123, "2022-09-21");
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from Audit;
++---------+---------------------+
+| AuditID | OrderDateTime       |
++---------+---------------------+
+|       1 | 2024-01-04 13:18:55 |
+|       2 | 2024-01-04 13:18:55 |
+|       3 | 2024-01-04 13:18:55 |
++---------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
