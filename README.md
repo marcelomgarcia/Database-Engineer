@@ -642,3 +642,88 @@ mysql> select * from Audit;
 
 mysql>
 ```
+
+### Task 4: Clients and employees address
+
+Using `CTE` to print the address of clients and employees:
+
+```sql
+with
+ClientsAddr as (
+  select Clients.FullName, Addresses.Street, Addresses.County
+  from Clients inner join Addresses
+  on Clients.AddressID = Addresses.AddressID
+),
+EmployeesAddr as (
+  select Employees.FullName, Addresses.Street, Addresses.County
+  from Employees inner join Addresses
+)
+select * from ClientsAddr
+union
+select * from EmployeesAddr;
+```
+
+The result is the following table:
+
+```
++------------------+-----------------------+-------------------+
+| FullName         | Street                | County            |
++------------------+-----------------------+-------------------+
+| Takashi Ito      | ,291 Oak Wood Avenue  | Graham County     |
+| Jane Murphy      | 724 Greenway Drive    | Pinal County      |
+| Laurina Delgado  | 102 Sycamore Lane     | Santa Cruz County |
+| Benjamin Clauss  | 125 Roselawn Close    | Gila County       |
+| Altay Ayhan      | 831 Beechwood Terrace | Cochise County    |
+| Greta Galkina    | 755 Palm Tree Hills   | Mohave County     |
+| Seamus Hogan     | 751 Waterfall Hills   | Tuscon County     |
+| Thomas Eriksson  | 878 Riverside Lane    | Tuscon County     |
+| Simon Tolo       | 908 Seaview Hills     | Tuscon County     |
+| Francesca Soffia | 243 Waterview Terrace | Tuscon County     |
+| Emily Sierra     | 148 Riverview Lane    | Tuscon County     |
+| Greta Galkina    | 178 Seaview Avenue    | Tuscon County     |
++------------------+-----------------------+-------------------+
+12 rows in set (0.00 sec)
+
+mysql>
+```
+
+### Task 5: Rewrite query as CTE
+
+Write the original query
+
+```sql
+SELECT CONCAT (SUM(Cost), " (2020)") AS "Total sum of P2 Product" FROM Orders WHERE YEAR (Date) = 2020 AND ProductID = "P2"
+UNION
+SELECT CONCAT (SUM(Cost), "(2021)") FROM Orders WHERE YEAR (Date) = 2021 AND ProductID = "P2"
+UNION
+SELECT CONCAT (SUM (Cost), "(2022)") FROM Orders WHERE YEAR (Date) = 2022 AND ProductID = "P2";
+```
+
+as a CTE
+
+```sql
+with
+SalesP2in2020 as (select concat(sum(Cost), " (2020)") as "Total sum of P2 Product" from Orders where year(Date) = 2020 and ProductID = "P2"),
+SalesP2in2021 as (select concat(sum(Cost), " (2021)") from Orders where year(Date) = 2021 and ProductID = "P2"),
+SalesP2in2022 as (select concat(sum(Cost), " (2022)") from Orders where year(Date) = 2022 and ProductID = "P2")
+select * from SalesP2in2020
+union
+select * from SalesP2in2021
+union
+select * from SalesP2in2022;
+```
+
+With the output
+
+```
++-------------------------+
+| Total sum of P2 Product |
++-------------------------+
+| 1000.00 (2020)          |
+| 100.00 (2021)           |
+| 1434.00 (2022)          |
++-------------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
