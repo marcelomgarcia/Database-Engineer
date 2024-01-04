@@ -1,0 +1,11 @@
+DELIMITER $$
+
+-- Insert ---
+
+CREATE TRIGGER UpdateAudit AFTER INSERT ON Orders FOR EACH ROW
+BEGIN
+  INSERT INTO Audit VALUES (NULL, NOW());
+END$$
+
+-- End of triggers.
+DELIMITER ;
