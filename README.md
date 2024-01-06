@@ -558,6 +558,8 @@ mysql>
 Creating a stored procedure
 
 ```sql
+DELIMITER //
+
 create procedure EvaluateProductYears (in prod_id varchar(10), out sold_2020 int, out sold_2021 int, out sold_2022 int)
 begin
     select sum(Quantity) into sold_2020 from Orders where ProductID = prod_id and year(Date) = 2020;
@@ -763,6 +765,42 @@ mysql> select
 | Cl5      | P5        | Altay Ayhan |     351208983 |
 +----------+-----------+-------------+---------------+
 3 rows in set (0.00 sec)
+
+mysql>
+```
+
+### Task 7: Stored procedure with 2 parameters, one input and the other output.
+
+Defining the procedure:
+
+```sql
+delimiter //
+
+create procedure GetProfit (in prod_id varchar(10), in yy int)
+begin
+  select sum(Orders.Quantity * (Products.SellPrice - Products.BuyPrice)) as Profit
+  from Orders inner join Products on Orders.ProductID = Products.ProductID
+  where Orders.ProductID=prod_id and year(Orders.Date) = yy;
+end //
+
+delimiter ;
+```
+
+Executing the procedure
+
+```
+mysql> source /tmp/GetProfit.sql
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call GetProfit('P1', 2020);
++--------+
+| Profit |
++--------+
+| 350.00 |
++--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
 
 mysql>
 ```
