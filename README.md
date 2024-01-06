@@ -804,3 +804,37 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql>
 ```
+
+### Task 8: Create virtual table with summary
+
+Creating a virtual table (_view_) with summary for the year 2022
+
+```sql
+create view DataSummary as
+select
+  Clients.FullName, Clients.ContactNumber, Addresses.County, Products.ProductName, Orders.ProductID, Orders.Cost, Orders.Date
+from
+  Clients inner join Addresses inner join Products inner join Orders
+on (
+  Clients.AddressID = Addresses.AddressID
+  and Products.ProductID = Orders.ProductID
+)
+where
+  year(Orders.Date) = 2022
+order by
+  Orders.Cost
+desc;
+```
+
+A sample of the view
+
+```
+mysql> select * from DataSummary;
++-----------------+---------------+-------------------+------------------------+-----------+---------+------------+
+| FullName        | ContactNumber | County            | ProductName            | ProductID | Cost    | Date       |
++-----------------+---------------+-------------------+------------------------+-----------+---------+------------+
+| Takashi Ito     |     351786345 | Graham County     | Sycamore trees         | P4        | 1200.00 | 2022-09-10 |
+| Jane Murphy     |     351567243 | Pinal County      | Sycamore trees         | P4        | 1200.00 | 2022-09-10 |
+| Laurina Delgado |     351342597 | Santa Cruz County | Sycamore trees         | P4        | 1200.00 | 2022-09-10 |
+(...)
+```
