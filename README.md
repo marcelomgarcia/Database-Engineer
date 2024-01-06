@@ -769,6 +769,16 @@ mysql> select
 mysql>
 ```
 
+The solution proposed uses `right join` instead of `inner join`:
+
+```sql
+SELECT Activity.Properties ->>'$.ClientID' 
+AS ClientID, Activity.Properties ->>'$.ProductID' 
+AS ProductID, Clients.FullName, Clients.ContactNumber 
+FROM Clients RIGHT JOIN Activity
+ON Clients.ClientID = Activity.Properties ->>'$.ClientID';
+```
+
 ### Task 7: Stored procedure with 2 parameters, one input and the other output.
 
 Defining the procedure:
@@ -805,6 +815,23 @@ Query OK, 0 rows affected (0.00 sec)
 mysql>
 ```
 
+The proposed solution is much more verbose
+
+```sql
+DELIMITER //
+CREATE PROCEDURE GetProfit(IN product_id VARCHAR(10), IN YearInput INT)
+BEGIN
+DECLARE profit DEC(7,2) DEFAULT 0.0; 
+DECLARE sold_quantity, buy_price, sell_price INT DEFAULT 0;
+SELECT SUM(Quantity) INTO sold_quantity FROM Orders WHERE ProductID = product_id AND YEAR(Date) = YearInput; 
+SELECT BuyPrice INTO buy_price FROM Products WHERE ProductID = product_id; 
+SELECT SellPrice INTO sell_price FROM Products WHERE ProductID = product_id;
+SET profit = (sell_price * sold_quantity) - (buy_price * sold_quantity);
+Select profit; 
+END //
+DELIMITER ;
+```
+
 ### Task 8: Create virtual table with summary
 
 Creating a virtual table (_view_) with summary for the year 2022
@@ -817,6 +844,7 @@ from
   Clients inner join Addresses inner join Products inner join Orders
 on (
   Clients.AddressID = Addresses.AddressID
+  and Clients.ClientID = Orders.ClientID
   and Products.ProductID = Orders.ProductID
 )
 where
