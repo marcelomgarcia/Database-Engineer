@@ -727,3 +727,42 @@ With the output
 
 mysql>
 ```
+
+### Task 6: JSON
+
+Table with client activity in JSON format
+
+```
+mysql> select * from Activity;
++------------+----------------------------------------------------------+
+| ActivityID | Properties                                               |
++------------+----------------------------------------------------------+ 
+|          1 | {"Order": "True", "ClientID": "Cl1", "ProductID": "P1"}  |
+|          2 | {"Order": "False", "ClientID": "Cl2", "ProductID": "P4"} |
+|          3 | {"Order": "True", "ClientID": "Cl5", "ProductID":"P5"}   | 
++------------+----------------------------------------------------------+
+3 rows in set (0.01 sec)
+
+mysql>
+```
+
+Querying client and activity
+
+```
+mysql> select
+    ->   Clients.ClientID, Activity.Properties->>'$.ProductID' as ProductID, Clients.FullName, Clients.ContactNumber
+    -> from
+    ->   Clients inner join Activity
+    -> on
+    -> Clients.ClientID = Activity.Properties->>'$.ClientID';
++----------+-----------+-------------+---------------+
+| ClientID | ProductID | FullName    | ContactNumber |
++----------+-----------+-------------+---------------+
+| Cl1      | P1        | Takashi Ito |     351786345 |
+| Cl2      | P4        | Jane Murphy |     351567243 |
+| Cl5      | P5        | Altay Ayhan |     351208983 |
++----------+-----------+-------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql>
+```
